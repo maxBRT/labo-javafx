@@ -1,36 +1,42 @@
 package com.github.maxbrt.films.model;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import jakarta.persistence.*;
+import java.util.List;
 
+@Entity
+@Table(name = "genres")
 public class Genre {
-    private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty nom = new SimpleStringProperty();
 
-    public Genre(int id, String nom) {
-        this.id.set(id);
-        this.nom.set(nom);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, unique = true)
+    private String nom;
+
+    @OneToMany(mappedBy = "genre")
+    private List<Contenu> contenus;
+
+    public Genre() {
     }
 
-    public int getId() {
-        return id.get();
+    public Genre(String nom) {
+        this.nom = nom;
     }
 
-    public IntegerProperty idProperty() {
+    public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getNom() {
-        return nom.get();
-    }
-
-    public void setNom(String value) {
-        nom.set(value);
-    }
-
-    public StringProperty nomProperty() {
         return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 }

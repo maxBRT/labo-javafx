@@ -1,91 +1,80 @@
 package com.github.maxbrt.films.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "progression_series")
 public class ProgressionSeries {
-    private final IntegerProperty id = new SimpleIntegerProperty();
-    private final IntegerProperty contenuId = new SimpleIntegerProperty();
-    private final IntegerProperty saisonsTotales = new SimpleIntegerProperty();
-    private final IntegerProperty saisonsVues = new SimpleIntegerProperty();
-    private final IntegerProperty episodesTotaux = new SimpleIntegerProperty();
-    private final IntegerProperty episodesVus = new SimpleIntegerProperty();
 
-    public ProgressionSeries(int id, int contenuId, int saisonsTotales, int saisonsVues,
-            int episodesTotaux, int episodesVus) {
-        this.id.set(id);
-        this.contenuId.set(contenuId);
-        this.saisonsTotales.set(saisonsTotales);
-        this.saisonsVues.set(saisonsVues);
-        this.episodesTotaux.set(episodesTotaux);
-        this.episodesVus.set(episodesVus);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    // This links the progression back to the main content
+    @OneToOne
+    @JoinColumn(name = "contenu_id", nullable = false)
+    private Contenu contenu;
+
+    private int saisonsTotales;
+    private int saisonsVues;
+    private int episodesTotaux;
+    private int episodesVus;
+
+    public ProgressionSeries() {
     }
 
-    public int getId() {
-        return id.get();
+    public ProgressionSeries(int saisonsTotales, int saisonsVues, int episodesTotaux, int episodesVus) {
+        this.saisonsTotales = saisonsTotales;
+        this.saisonsVues = saisonsVues;
+        this.episodesTotaux = episodesTotaux;
+        this.episodesVus = episodesVus;
     }
 
-    public IntegerProperty idProperty() {
+    public Integer getId() {
         return id;
     }
 
-    public int getContenuId() {
-        return contenuId.get();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setContenuId(int value) {
-        contenuId.set(value);
+    public Contenu getContenu() {
+        return contenu;
     }
 
-    public IntegerProperty contenuIdProperty() {
-        return contenuId;
+    public void setContenu(Contenu contenu) {
+        this.contenu = contenu;
     }
 
     public int getSaisonsTotales() {
-        return saisonsTotales.get();
-    }
-
-    public void setSaisonsTotales(int value) {
-        saisonsTotales.set(value);
-    }
-
-    public IntegerProperty saisonsTotalesProperty() {
         return saisonsTotales;
     }
 
+    public void setSaisonsTotales(int saisonsTotales) {
+        this.saisonsTotales = saisonsTotales;
+    }
+
     public int getSaisonsVues() {
-        return saisonsVues.get();
-    }
-
-    public void setSaisonsVues(int value) {
-        saisonsVues.set(value);
-    }
-
-    public IntegerProperty saisonsVuesProperty() {
         return saisonsVues;
     }
 
+    public void setSaisonsVues(int saisonsVues) {
+        this.saisonsVues = saisonsVues;
+    }
+
     public int getEpisodesTotaux() {
-        return episodesTotaux.get();
-    }
-
-    public void setEpisodesTotaux(int value) {
-        episodesTotaux.set(value);
-    }
-
-    public IntegerProperty episodesTotauxProperty() {
         return episodesTotaux;
     }
 
+    public void setEpisodesTotaux(int episodesTotaux) {
+        this.episodesTotaux = episodesTotaux;
+    }
+
     public int getEpisodesVus() {
-        return episodesVus.get();
-    }
-
-    public void setEpisodesVus(int value) {
-        episodesVus.set(value);
-    }
-
-    public IntegerProperty episodesVusProperty() {
         return episodesVus;
+    }
+
+    public void setEpisodesVus(int episodesVus) {
+        this.episodesVus = episodesVus;
     }
 }
