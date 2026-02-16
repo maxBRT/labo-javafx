@@ -1,11 +1,12 @@
 package com.github.maxbrt.films.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.Statement;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -21,23 +22,20 @@ public class DatabaseService {
 
     public static void init() {
         try (Connection conn = connect()) {
-            if (conn != null && !conn.isClosed()) {
-                try {
-                    File schemaFile = new File("schema.sql");
-                    Scanner scanner = new Scanner(schemaFile);
-                    StringBuilder sb = new StringBuilder();
-                    while (scanner.hasNextLine()) {
-                        sb.append(scanner.nextLine()).append("\n");
+            String script = Files.readString(Path.of("schema.sql"));
+
+            try (Statement stmt = conn.createStatement()) {
+                for (String sql : script.split(";")) {
+                    String trimmedSql = sql.trim();
+                    if (!trimmedSql.isEmpty()) {
+                        stmt.execute(trimmedSql);
                     }
-                    scanner.close();
-                    conn.createStatement().execute(sb.toString());
-                    System.out.println("Migration applied successfully!");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    System.exit(1);
                 }
             }
-        } catch (SQLException e) {
+            System.out.println("Migration applied successfully!");
+
+        } catch (IOException | SQLException e) {
+            System.err.println("Database initialization failed: " + e.getMessage());
             e.printStackTrace();
             System.exit(1);
         }
