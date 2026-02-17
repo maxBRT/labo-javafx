@@ -37,9 +37,6 @@ public class Contenu {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @OneToOne(mappedBy = "contenu", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ProgressionSeries progressionSeries;
-
     public Contenu() {
     }
 
@@ -138,14 +135,12 @@ public class Contenu {
         this.genre = genre;
     }
 
-    public ProgressionSeries getProgressionSeries() {
-        return progressionSeries;
+    public String getSynopsis() {
+        return synopsis;
     }
 
-    public void setProgressionSeries(ProgressionSeries progressionSeries) {
-        this.progressionSeries = progressionSeries;
-        if (progressionSeries != null) {
-            progressionSeries.setContenu(this);
-        }
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
+
 }

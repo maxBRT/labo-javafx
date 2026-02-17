@@ -6,6 +6,7 @@ module com.github.maxbrt.films {
     requires org.hibernate.orm.core;
     requires java.sql;
     requires java.naming;
+    requires atlantafx.base;
 
     opens com.github.maxbrt.films to javafx.fxml;
     opens com.github.maxbrt.films.model to org.hibernate.orm.core;

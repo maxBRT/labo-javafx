@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.github.maxbrt.films.FormController">
+    <VBox spacing="10" maxWidth="400" alignment="CENTER">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+        </padding>
+
+        <Label text="Titre *" />
+        <TextField fx:id="titreField" />
+
+        <Label text="Type *" />
+        <ComboBox fx:id="typeField" maxWidth="Infinity" />
+
+        <Label text="Genre" />
+        <ComboBox fx:id="genreField" maxWidth="Infinity" />
+
+        <Label text="Année de sortie" />
+        <TextField fx:id="anneeSortieField" />
+
+        <Label text="Réalisateur" />
+        <TextField fx:id="realisateurField" />
+
+        <Label text="Synopsis" />
+        <TextArea fx:id="synopsisField" prefRowCount="3" />
+
+        <Label text="URL Image" />
+        <TextField fx:id="imageUrlField" />
+
+        <Label text="Statut" />
+        <ComboBox fx:id="statutField" maxWidth="Infinity" />
+
+        <Label text="Note (0-5)" />
+        <TextField fx:id="noteField" />
+
+        <CheckBox fx:id="watchlistField" text="Watchlist" />
+
+        <HBox spacing="10">
+            <Button
+                fx:id="saveBtn"
+                text="Enregistrer"
+                maxWidth="Infinity"
+                HBox.hgrow="ALWAYS"
+                onAction="#handleSave" />
+            <Button
+                fx:id="cancelBtn"
+                text="Annuler"
+                maxWidth="Infinity"
+                HBox.hgrow="ALWAYS"
+                onAction="#handleCancel"
+                visible="false"
+                managed="false" />
+        </HBox>
+        <Label fx:id="messageLabel" />
+    </VBox>
+</StackPane>

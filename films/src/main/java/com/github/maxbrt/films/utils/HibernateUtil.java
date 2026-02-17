@@ -1,4 +1,4 @@
-package com.github.maxbrt.films.service;
+package com.github.maxbrt.films.utils;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

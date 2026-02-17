@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-    prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE"
-    xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.github.maxbrt.films.MainController">
     <tabs>
-        <Tab text="Mes Films">
+        <Tab text="Mes Contenus">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                    <children>
-                        <ListView layoutX="110.0" layoutY="85.0" prefHeight="369.0"
-                            prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                            AnchorPane.topAnchor="0.0" />
-                    </children>
-                </AnchorPane>
+                <fx:include fx:id="listView" source="list-view.fxml" />
             </content>
         </Tab>
-        <Tab text="Nouveau Film">
+        <Tab fx:id="formTab" text="Ajouter">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <fx:include fx:id="formView" source="form-view.fxml" />
             </content>
         </Tab>
     </tabs>

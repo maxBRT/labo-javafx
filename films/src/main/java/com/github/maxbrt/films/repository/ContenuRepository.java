@@ -1,30 +1,24 @@
 package com.github.maxbrt.films.repository;
 
-import com.github.maxbrt.films.model.Contenu;
 import java.util.List;
-import java.util.Optional;
 
-public class ContenuRepository {
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-    public void save(Contenu contenu) {
-        // TODO
+import com.github.maxbrt.films.model.Contenu;
+import com.github.maxbrt.films.model.Genre;
+
+public class ContenuRepository extends AbstractRepository<Contenu, Integer> {
+
+    public ContenuRepository(SessionFactory sessionFactory, Class<Contenu> entityClass) {
+        super(sessionFactory, entityClass);
     }
 
-    public Optional<Contenu> findById(Integer id) {
-        // TODO
-        return Optional.empty();
-    }
-
-    public List<Contenu> findAll() {
-        // TODO
-        return List.of();
-    }
-
-    public void update(Contenu contenu) {
-        // TODO
-    }
-
-    public void delete(Contenu contenu) {
-        // TODO
+    public List<Contenu> findByGenre(Genre genre) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Contenu where genre = :genre", Contenu.class)
+                    .setParameter("genre", genre)
+                    .list();
+        }
     }
 }

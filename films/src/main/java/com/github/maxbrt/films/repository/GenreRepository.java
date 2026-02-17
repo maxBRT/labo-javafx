@@ -1,31 +1,12 @@
 package com.github.maxbrt.films.repository;
 
+import org.hibernate.SessionFactory;
+
 import com.github.maxbrt.films.model.Genre;
-import java.util.List;
-import java.util.Optional;
 
-public class GenreRepository {
+public class GenreRepository extends AbstractRepository<Genre, Integer> {
 
-    public void save(Genre genre) {
-        // TODO
-    }
-
-    public Optional<Genre> findById(Integer id) {
-        // TODO
-        return Optional.empty();
-    }
-
-    public List<Genre> findAll() {
-        // TODO
-        return List.of();
-    }
-
-    public Optional<Genre> findByNom(String nom) {
-        // TODO
-        return Optional.empty();
-    }
-
-    public void delete(Genre genre) {
-        // TODO
+    public GenreRepository(SessionFactory sessionFactory, Class<Genre> entityClass) {
+        super(sessionFactory, entityClass);
     }
 }
