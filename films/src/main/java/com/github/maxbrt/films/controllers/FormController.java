@@ -57,6 +57,9 @@ public class FormController {
         genreField.getItems().addAll(genres);
     }
 
+    // Set the callback that need to know about the other controllers
+    // I just pass them here so it can reaload the list and navigate back to the
+    // list tab on save and on cancel
     public void setOnSaveComplete(Runnable onSaveComplete) {
         this.onSaveComplete = onSaveComplete;
     }
@@ -65,6 +68,7 @@ public class FormController {
         this.onCancel = onCancel;
     }
 
+    // Populate the form with the contenu to update
     public void editContenu(Contenu c) {
         editingContenu = c;
 
@@ -93,6 +97,7 @@ public class FormController {
     private void handleSave() {
         messageLabel.setStyle("-fx-text-fill: red;");
 
+        // Validate form
         if (titreField.getText() == null || titreField.getText().isBlank()) {
             messageLabel.setText("Le titre est obligatoire.");
             return;
@@ -136,6 +141,7 @@ public class FormController {
             return;
         }
 
+        // Add or update the contenu after validation
         Contenu c = editingContenu != null ? editingContenu : new Contenu();
         c.setTitre(titreField.getText().trim());
         c.setType(typeField.getValue());
@@ -172,6 +178,7 @@ public class FormController {
         }
     }
 
+    // Helper to clear the form
     private void clearForm() {
         editingContenu = null;
         titreField.clear();

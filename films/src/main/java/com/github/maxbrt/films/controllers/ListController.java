@@ -44,7 +44,7 @@ public class ListController {
         typeFilter.getItems().addAll("Tous", "Film", "Série");
         typeFilter.setValue("Tous");
 
-        // Load genres without blocking the UI thread
+        // Load genres in a virtual thread
         Thread.ofVirtual().start(() -> {
             List<Genre> genres = genreRepo.findAll();
             Platform.runLater(() -> genres.forEach(g -> genreFilter.getItems().add(g.getNom())));
@@ -65,6 +65,7 @@ public class ListController {
     }
 
     public void loadContenus() {
+        // Hit the database in a virtual thread
         Thread.ofVirtual().start(() -> {
             List<Contenu> result = contenuRepo.findAll();
             Platform.runLater(() -> {
@@ -81,6 +82,7 @@ public class ListController {
         String selectedGenre = genreFilter.getValue();
         String selectedType = typeFilter.getValue();
 
+        // Filter logic
         List<Contenu> filtered = allContenus.stream()
                 .filter(c -> search.isEmpty() || c.getTitre().toLowerCase().contains(search))
                 .filter(c -> "Tous".equals(selectedGenre)

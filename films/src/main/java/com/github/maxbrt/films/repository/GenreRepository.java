@@ -6,12 +6,16 @@ import org.hibernate.Transaction;
 
 import com.github.maxbrt.films.model.Genre;
 
+/* This is the repository inherit CRUD operations from AbstractRepository */
 public class GenreRepository extends AbstractRepository<Genre, Integer> {
 
     public GenreRepository(SessionFactory sessionFactory, Class<Genre> entityClass) {
         super(sessionFactory, entityClass);
     }
 
+    // Helper for when we fetch from the API.
+    // This method allows me to just get the genre or
+    // create it if it doesn'texist
     public Genre findOrCreateByName(String name) {
         try (Session session = sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();

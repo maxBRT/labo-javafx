@@ -6,7 +6,9 @@ import org.hibernate.Transaction;
 import java.util.List;
 import java.util.Optional;
 
-/* Here I create an abstract repo to handle basic CRUD because Java is a crazy language that wants me to write 500 lines of code to do basic stuff */
+/* Here I create an abstract repo with generics to handle basic CRUD.
+ * That way, any repository can inherit for it and have all the basic CRUD by default 
+*/
 public abstract class AbstractRepository<T, ID> {
 
     protected final SessionFactory sessionFactory;

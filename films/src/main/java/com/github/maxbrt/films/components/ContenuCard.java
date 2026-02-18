@@ -19,9 +19,12 @@ public class ContenuCard extends VBox {
                 "-fx-border-color: #0B81F8;" +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 6, 0, 0, 2);");
 
+        // Build the card with the helpers
         getChildren().addAll(buildPosterStack(c), buildInfo(c), actionsPane);
     }
 
+    // Here I create a stack pane with the poster image and the synopsis
+    // The synopsis has its opacity set to 0 by default, and is shown on hover
     private StackPane buildPosterStack(Contenu c) {
         ImageView poster = new ImageView();
         poster.setFitWidth(200);
@@ -52,6 +55,7 @@ public class ContenuCard extends VBox {
         return posterStack;
     }
 
+    // Helper to build the info section
     private VBox buildInfo(Contenu c) {
         VBox info = new VBox(4);
         info.setStyle("-fx-padding: 8;");

@@ -48,7 +48,7 @@ public class MainController {
             tabPane.getSelectionModel().select(0);
         });
 
-        // Reset the form tab title when switching back to list
+        // Handle the tab switching hooks
         tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab != formTab) {
                 formTab.setText("Ajouter");
