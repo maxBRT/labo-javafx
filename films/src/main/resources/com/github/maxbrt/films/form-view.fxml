@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<StackPane
+<ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
     xmlns="http://javafx.com/javafx/21"
     xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.github.maxbrt.films.FormController">
+    fx:controller="com.github.maxbrt.films.controllers.FormController">
     <VBox spacing="10" maxWidth="400" alignment="CENTER">
         <padding>
             <Insets top="20" right="20" bottom="20" left="20" />
@@ -60,4 +60,4 @@
         </HBox>
         <Label fx:id="messageLabel" />
     </VBox>
-</StackPane>
+</ScrollPane>

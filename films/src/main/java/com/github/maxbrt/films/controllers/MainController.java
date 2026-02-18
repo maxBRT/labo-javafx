@@ -1,4 +1,4 @@
-package com.github.maxbrt.films;
+package com.github.maxbrt.films.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
@@ -16,9 +16,15 @@ public class MainController {
     private Tab formTab;
 
     @FXML
+    private Tab listTab;
+
+    @FXML
     private ListController listViewController;
     @FXML
     private FormController formViewController;
+
+    @FXML
+    private DiscoverController discoverViewController;
 
     @FXML
     public void initialize() {
@@ -46,6 +52,9 @@ public class MainController {
         tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab != formTab) {
                 formTab.setText("Ajouter");
+            }
+            if (newTab == listTab) {
+                listViewController.loadContenus();
             }
         });
     }

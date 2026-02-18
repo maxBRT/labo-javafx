@@ -6,9 +6,9 @@
 <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
     xmlns="http://javafx.com/javafx/21"
     xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.github.maxbrt.films.MainController">
+    fx:controller="com.github.maxbrt.films.controllers.MainController">
     <tabs>
-        <Tab text="Mes Contenus">
+        <Tab fx:id="listTab" text="Mes Contenus">
             <content>
                 <fx:include fx:id="listView" source="list-view.fxml" />
             </content>
@@ -16,6 +16,11 @@
         <Tab fx:id="formTab" text="Ajouter">
             <content>
                 <fx:include fx:id="formView" source="form-view.fxml" />
+            </content>
+        </Tab>
+        <Tab fx:id="discoverTab" text="Découvrir">
+            <content>
+                <fx:include fx:id="discoverView" source="discover-view.fxml" />
             </content>
         </Tab>
     </tabs>

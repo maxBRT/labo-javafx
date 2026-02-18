@@ -2,6 +2,7 @@ package com.github.maxbrt.films.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity

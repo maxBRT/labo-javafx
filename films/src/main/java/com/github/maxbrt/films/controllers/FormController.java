@@ -1,4 +1,4 @@
-package com.github.maxbrt.films;
+package com.github.maxbrt.films.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
