@@ -7,57 +7,96 @@
 <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
     xmlns="http://javafx.com/javafx/21"
     xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.github.maxbrt.films.controllers.FormController">
-    <VBox spacing="10" maxWidth="400" alignment="CENTER">
+    fx:controller="com.github.maxbrt.films.controllers.FormController"
+>
+
+    <VBox alignment="TOP_CENTER">
         <padding>
-            <Insets top="20" right="20" bottom="20" left="20" />
+            <Insets top="32" right="20" bottom="32" left="20" />
         </padding>
 
-        <Label text="Titre *" />
-        <TextField fx:id="titreField" />
+        <VBox maxWidth="520" spacing="18"
+            style="-fx-background-radius: 12;
+                    -fx-border-color: #0B81F8;
+                     -fx-border-radius: 12;
+                     -fx-border-width: 1;
+                     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 8, 0, 0, 2);">
+            <padding>
+                <Insets top="32" right="32" bottom="32" left="32" />
+            </padding>
 
-        <Label text="Type *" />
-        <ComboBox fx:id="typeField" maxWidth="Infinity" />
+            <VBox spacing="6">
+                <Label text="TITRE *" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                <TextField fx:id="titreField" promptText="Ex: Inception"
+                    style="-fx-font-size: 13px;" />
+            </VBox>
 
-        <Label text="Genre" />
-        <ComboBox fx:id="genreField" maxWidth="Infinity" />
+            <HBox spacing="16">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="TYPE *" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                    <ComboBox fx:id="typeField" maxWidth="Infinity" style="-fx-font-size: 13px;" />
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="GENRE" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                    <ComboBox fx:id="genreField" maxWidth="Infinity" style="-fx-font-size: 13px;" />
+                </VBox>
+            </HBox>
 
-        <Label text="Année de sortie" />
-        <TextField fx:id="anneeSortieField" />
+            <HBox spacing="16">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="ANNÉE DE SORTIE"
+                        style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                    <TextField fx:id="anneeSortieField" promptText="Ex: 2010"
+                        style="-fx-font-size: 13px;" />
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="NOTE (0 – 5)" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                    <TextField fx:id="noteField" promptText="Ex: 4" style="-fx-font-size: 13px;" />
+                </VBox>
+            </HBox>
 
-        <Label text="Réalisateur" />
-        <TextField fx:id="realisateurField" />
+            <VBox spacing="6">
+                <Label text="RÉALISATEUR" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                <TextField fx:id="realisateurField" promptText="Ex: Christopher Nolan"
+                    style="-fx-font-size: 13px;" />
+            </VBox>
 
-        <Label text="Synopsis" />
-        <TextArea fx:id="synopsisField" prefRowCount="3" />
+            <VBox spacing="6">
+                <Label text="SYNOPSIS" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                <TextArea fx:id="synopsisField" prefRowCount="4" wrapText="true"
+                    promptText="Un bref résumé..." style="-fx-font-size: 13px;" />
+            </VBox>
 
-        <Label text="URL Image" />
-        <TextField fx:id="imageUrlField" />
+            <VBox spacing="6">
+                <Label text="URL DE L'IMAGE" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                <TextField fx:id="imageUrlField" promptText="https://..."
+                    style="-fx-font-size: 13px;" />
+            </VBox>
 
-        <Label text="Statut" />
-        <ComboBox fx:id="statutField" maxWidth="Infinity" />
+            <Separator />
 
-        <Label text="Note (0-5)" />
-        <TextField fx:id="noteField" />
+            <HBox spacing="16" alignment="BOTTOM_LEFT">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="STATUT" style="-fx-font-size: 10px; -fx-font-weight: bold;" />
+                    <ComboBox fx:id="statutField" maxWidth="Infinity" style="-fx-font-size: 13px;" />
+                </VBox>
+                <CheckBox fx:id="watchlistField" text="Watchlist" style="-fx-font-size: 13px;" />
+            </HBox>
 
-        <CheckBox fx:id="watchlistField" text="Watchlist" />
+            <HBox spacing="10">
+                <Button fx:id="saveBtn" text="Enregistrer"
+                    maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                    onAction="#handleSave"
+                    style="-fx-font-size: 13px; -fx-cursor: hand;" />
+                <Button fx:id="cancelBtn" text="Annuler"
+                    maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                    onAction="#handleCancel"
+                    visible="false" managed="false"
+                    style="-fx-font-size: 13px; -fx-cursor: hand;" />
+            </HBox>
 
-        <HBox spacing="10">
-            <Button
-                fx:id="saveBtn"
-                text="Enregistrer"
-                maxWidth="Infinity"
-                HBox.hgrow="ALWAYS"
-                onAction="#handleSave" />
-            <Button
-                fx:id="cancelBtn"
-                text="Annuler"
-                maxWidth="Infinity"
-                HBox.hgrow="ALWAYS"
-                onAction="#handleCancel"
-                visible="false"
-                managed="false" />
-        </HBox>
-        <Label fx:id="messageLabel" />
+            <Label fx:id="messageLabel" wrapText="true" style="-fx-font-size: 12px;" />
+
+        </VBox>
     </VBox>
 </ScrollPane>

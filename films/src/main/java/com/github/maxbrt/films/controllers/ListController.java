@@ -1,5 +1,6 @@
 package com.github.maxbrt.films.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -25,32 +26,36 @@ public class ListController {
     @FXML
     private ComboBox<String> typeFilter;
     @FXML
+    private ToggleButton watchlistFilter;
+    @FXML
     private FlowPane cardsContainer;
 
     private ContenuRepository contenuRepo;
-    private List<Contenu> allContenus;
+    private List<Contenu> allContenus = List.of();
     private Consumer<Contenu> onEditRequest;
 
     @FXML
     public void initialize() {
         contenuRepo = new ContenuRepository(HibernateUtil.getSessionFactory(), Contenu.class);
         GenreRepository genreRepo = new GenreRepository(HibernateUtil.getSessionFactory(), Genre.class);
-        List<Genre> genres = genreRepo.findAll();
 
         genreFilter.getItems().add("Tous");
-        for (Genre g : genres) {
-            genreFilter.getItems().add(g.getNom());
-        }
         genreFilter.setValue("Tous");
-
         typeFilter.getItems().addAll("Tous", "Film", "Série");
         typeFilter.setValue("Tous");
+
+        // Load genres without blocking the UI thread
+        Thread.ofVirtual().start(() -> {
+            List<Genre> genres = genreRepo.findAll();
+            Platform.runLater(() -> genres.forEach(g -> genreFilter.getItems().add(g.getNom())));
+        });
 
         loadContenus();
 
         searchField.textProperty().addListener((obs, old, val) -> refreshCards());
         genreFilter.setOnAction(e -> refreshCards());
         typeFilter.setOnAction(e -> refreshCards());
+        watchlistFilter.setOnAction(e -> refreshCards());
     }
 
     // This controller doesn't need to know about the form controller, so I just
@@ -60,8 +65,13 @@ public class ListController {
     }
 
     public void loadContenus() {
-        allContenus = contenuRepo.findAll();
-        refreshCards();
+        Thread.ofVirtual().start(() -> {
+            List<Contenu> result = contenuRepo.findAll();
+            Platform.runLater(() -> {
+                allContenus = result;
+                refreshCards();
+            });
+        });
     }
 
     private void refreshCards() {
@@ -76,6 +86,7 @@ public class ListController {
                 .filter(c -> "Tous".equals(selectedGenre)
                         || (c.getGenre() != null && c.getGenre().getNom().equals(selectedGenre)))
                 .filter(c -> "Tous".equals(selectedType) || selectedType.equals(c.getType()))
+                .filter(c -> !watchlistFilter.isSelected() || c.isWatchlist())
                 .toList();
 
         for (Contenu c : filtered) {
@@ -98,7 +109,7 @@ public class ListController {
         statutCombo.setStyle("-fx-font-size: 13px;");
         statutCombo.setOnAction(e -> {
             c.setStatut(statutCombo.getValue());
-            contenuRepo.update(c);
+            Thread.ofVirtual().start(() -> contenuRepo.update(c));
         });
 
         Button editBtn = new Button("Modifier");
@@ -114,17 +125,19 @@ public class ListController {
         watchlistBtn.setStyle(btnStyle);
         watchlistBtn.setOnAction(e -> {
             c.setWatchlist(!c.isWatchlist());
-            contenuRepo.update(c);
-            loadContenus();
+            Thread.ofVirtual().start(() -> {
+                contenuRepo.update(c);
+                Platform.runLater(this::loadContenus);
+            });
         });
 
         Button deleteBtn = new Button("Supprimer");
         deleteBtn.setMaxWidth(Double.MAX_VALUE);
         deleteBtn.setStyle(btnStyle);
-        deleteBtn.setOnAction(e -> {
+        deleteBtn.setOnAction(e -> Thread.ofVirtual().start(() -> {
             contenuRepo.delete(c.getId());
-            loadContenus();
-        });
+            Platform.runLater(this::loadContenus);
+        }));
 
         actions.getChildren().addAll(statutCombo, editBtn, watchlistBtn, deleteBtn);
         return actions;

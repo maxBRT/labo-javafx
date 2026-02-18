@@ -9,6 +9,7 @@ import com.github.maxbrt.films.service.ApiService;
 import com.github.maxbrt.films.utils.HibernateUtil;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -37,15 +38,28 @@ public class DiscoverController {
 
     public void loadCards() {
         cardsContainer.getChildren().clear();
-        try {
-            List<Contenu> contenus = apiService.getPopularMovies();
-            for (Contenu c : contenus) {
-                cardsContainer.getChildren().add(new ContenuCard(c, buildDiscoverActions(c)));
+        cardsContainer.getChildren().add(new Label("Chargement..."));
+        refreshButton.setDisable(true);
+
+        Thread.ofVirtual().start(() -> {
+            try {
+                List<Contenu> contenus = apiService.getPopularMovies();
+                Platform.runLater(() -> {
+                    cardsContainer.getChildren().clear();
+                    for (Contenu c : contenus) {
+                        cardsContainer.getChildren().add(new ContenuCard(c, buildDiscoverActions(c)));
+                    }
+                    refreshButton.setDisable(false);
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    cardsContainer.getChildren().clear();
+                    cardsContainer.getChildren().add(new Label("Erreur !"));
+                    refreshButton.setDisable(false);
+                });
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            cardsContainer.getChildren().add(new Label("Erreur !"));
-        }
+        });
     }
 
     private Node buildDiscoverActions(Contenu c) {
@@ -56,9 +70,11 @@ public class DiscoverController {
         watchlistBtn.setMaxWidth(Double.MAX_VALUE);
         watchlistBtn.setStyle("-fx-font-size: 11px; -fx-cursor: hand;");
         watchlistBtn.setOnAction(e -> {
-            contenuRepo.save(c);
-            watchlistBtn.setText("Ajouté");
             watchlistBtn.setDisable(true);
+            Thread.ofVirtual().start(() -> {
+                contenuRepo.save(c);
+                Platform.runLater(() -> watchlistBtn.setText("\u2713 Ajouté"));
+            });
         });
 
         actions.getChildren().add(watchlistBtn);

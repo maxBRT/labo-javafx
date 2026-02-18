@@ -16,7 +16,7 @@ public class ContenuCard extends VBox {
         setPrefWidth(200);
         setAlignment(Pos.TOP_CENTER);
         setStyle("-fx-border-radius: 8; -fx-border-width: 1;" +
-                "-fx-border-color: #e0e0e0;" +
+                "-fx-border-color: #0B81F8;" +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 6, 0, 0, 2);");
 
         getChildren().addAll(buildPosterStack(c), buildInfo(c), actionsPane);
